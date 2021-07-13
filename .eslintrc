@@ -22,6 +22,12 @@
         "prettier/prettier": "error",
         "class-methods-use-this": "off",
         "@typescript-eslint/camelcase": "off",
+        "@typescript-eslint/no-used-vars": [
+            "error",
+            {
+                "argsIgnorePattern": "_"
+            }
+        ],
         "import/extensions": [
             "error",
             "ignorePackages",
