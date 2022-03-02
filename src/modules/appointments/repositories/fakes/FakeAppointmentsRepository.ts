@@ -1,7 +1,7 @@
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import { isEqual } from 'date-fns';
-import { uuid } from 'uuidv4';
+import { v4 } from 'uuid';
 import Appointment from '../../infra/typeorm/entities/Appointment';
 
 class FakeAppointmentsRepository implements IAppointmentsRepository {
@@ -21,7 +21,7 @@ class FakeAppointmentsRepository implements IAppointmentsRepository {
     }: ICreateAppointmentDTO): Promise<Appointment> {
         const appointment = new Appointment();
 
-        Object.assign(appointment, { id: uuid(), date, provider_id });
+        Object.assign(appointment, { id: v4(), date, provider_id });
 
         this.appointments.push(appointment);
 

@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4';
+import { v4 } from 'uuid';
 import UserToken from '../../infra/typeorm/entities/UserToken';
 import IUserTokensRepository from '../IUserTokensRepository';
 
@@ -9,8 +9,8 @@ class FakeUserTokensRepository implements IUserTokensRepository {
         const userToken = new UserToken();
 
         Object.assign(userToken, {
-            id: uuid(),
-            token: uuid(),
+            id: v4(),
+            token: v4(),
             user_id,
             created_at: new Date(),
             updated_at: new Date()

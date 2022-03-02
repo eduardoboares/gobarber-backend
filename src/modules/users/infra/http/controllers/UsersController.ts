@@ -4,17 +4,19 @@ import { container } from 'tsyringe';
 
 export default class UsersController {
     async create(request: Request, response: Response): Promise<Response> {
-        const { email, password } = request.body;
+        try {
+            const { email, password } = request.body;
 
-        const AuthenticateUser = container.resolve(AuthenticateUserService);
+            const AuthenticateUser = container.resolve(AuthenticateUserService);
 
-        const { user, token } = await AuthenticateUser.execute({
-            email,
-            password
-        });
+            const { user, token } = await AuthenticateUser.execute({
+                email,
+                password
+            });
 
-        delete user.password;
-
-        return response.json({ user, token });
+            return response.json({ user, token });
+        } catch (error) {
+            return response.json(error);
+        }
     }
 }

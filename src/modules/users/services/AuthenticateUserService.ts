@@ -2,25 +2,10 @@ import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
+import { ISessionRequest } from '../models/ISessionRequest.model';
+import { ISessionResponse } from '../models/ISessionResponse';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
-
-interface IRequest {
-    email: string;
-    password: string;
-}
-
-interface IResponse {
-    user: {
-        id: string;
-        email: string;
-        password?: string;
-        avatar?: string;
-        created_at: Date;
-        updated_at: Date;
-    };
-    token: string;
-}
 
 @injectable()
 export default class AuthenticateUserService {
@@ -32,7 +17,10 @@ export default class AuthenticateUserService {
         private hashProvider: IHashProvider
     ) {}
 
-    public async execute({ email, password }: IRequest): Promise<IResponse> {
+    public async execute({
+        email,
+        password
+    }: ISessionRequest): Promise<ISessionResponse> {
         const user = await this.usersRepository.findByEmail(email);
 
         if (!user) {

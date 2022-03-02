@@ -1,20 +1,12 @@
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
+import { IUserResponse } from '../models/IUserResponse.model';
 import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
     user_id: string;
     avatarFilename: string;
-}
-
-interface IResponse {
-    id: string;
-    email: string;
-    password?: string;
-    avatar?: string;
-    created_at: Date;
-    updated_at: Date;
 }
 
 @injectable()
@@ -30,7 +22,7 @@ export default class UpdateUserAvatarService {
     public async execute({
         user_id,
         avatarFilename
-    }: IRequest): Promise<IResponse> {
+    }: IRequest): Promise<IUserResponse> {
         const user = await this.usersRepository.findById(user_id);
 
         if (!user) {
